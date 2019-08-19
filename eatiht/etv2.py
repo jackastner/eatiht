@@ -134,7 +134,7 @@ def get_html_tree(filename_url_or_filelike):
     try:
         handler = (
             HTTPSHandler
-                if filename_url_or_filelike.lower().startswith('https')
+                if filename_url_or_filelike.lower().startswith(b'https')
                 else HTTPHandler
         )
         cj = CookieJar()
