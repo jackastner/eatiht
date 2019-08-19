@@ -142,24 +142,25 @@ def get_html_tree(filename_url_or_filelike):
         opener.add_handler(HTTPCookieProcessor(cj))
 
         resp = opener.open(filename_url_or_filelike)
-    except(AttributeError):
-        content = filename_url_or_filelike.read()
-        encoding = chardet.detect(content)['encoding']
+    except:
+        try:
+            content = filename_url_or_filelike.read()
+            encoding = chardet.detect(content)['encoding']
 
-        parsed_html = html.parse(BytesIO(content),
-                                 html.HTMLParser(encoding=encoding,
-                                                 remove_blank_text=True))
+            parsed_html = html.parse(BytesIO(content),
+                                     html.HTMLParser(encoding=encoding,
+                                                     remove_blank_text=True))
 
-        return parsed_html
-    except(ValueError):
-        content = filename_url_or_filelike
-        encoding = chardet.detect(content)['encoding']
+            return parsed_html
+        except:
+            content = filename_url_or_filelike
+            encoding = chardet.detect(content)['encoding']
 
-        parsed_html = html.parse(BytesIO(content),
-                                 html.HTMLParser(encoding=encoding,
-                                                 remove_blank_text=True))
+            parsed_html = html.parse(BytesIO(content),
+                                     html.HTMLParser(encoding=encoding,
+                                                     remove_blank_text=True))
 
-        return parsed_html
+            return parsed_html
 
     try:
         content = resp.read()
